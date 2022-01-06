@@ -2,15 +2,12 @@ import logging
 import logging.config
 import os
 from logging.handlers import TimedRotatingFileHandler
-from time import sleep
-from datetime import datetime
 
-import logging
-
+from pythonjsonlogger import jsonlogger
 
 class AppLogger:
     def __init__(self):
-        self._log_format = f"%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s(%(lineno)d) - %(message)s"
+        self._log_format = f"%(asctime)s - [%(levelname)s] - %(name)s - %(filename)s .%(funcName)s %(lineno)d - %(message)s"
         
     def get_stream_handler(self):
         stream_handler = logging.StreamHandler()
@@ -23,6 +20,8 @@ class AppLogger:
                          backupCount=0)
         rotation_handler.setLevel(logging.DEBUG)
         rotation_handler.setFormatter(logging.Formatter(self._log_format))
+        #formatter = jsonlogger.JsonFormatter(self._log_format)
+        #rotation_handler.setFormatter(formatter)
         return rotation_handler
 
 
